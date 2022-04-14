@@ -5,5 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class ConfigService {
 
+  baseUrl: string = 'https://reqres.in';
+
   constructor() { }
 }

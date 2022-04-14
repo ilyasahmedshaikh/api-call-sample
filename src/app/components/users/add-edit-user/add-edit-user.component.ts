@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UsersService } from '../users.service';
 
 @Component({
   selector: 'app-add-edit-user',
@@ -7,9 +9,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddEditUserComponent implements OnInit {
 
-  constructor() { }
+  programForm: any = FormGroup;
+
+  constructor(
+    private fb: FormBuilder,
+    private users: UsersService
+  ) { }
 
   ngOnInit(): void {
+    this.formInit();
   }
 
+  formInit() {
+    this.programForm = this.fb.group({
+      name: ['', Validators.required],
+      job: ['', Validators.required]
+    });
+  }
+
+  createUser() {
+    let data = this.programForm.value;
+
+    this.users.addNewUser(data).subscribe(res => {
+      console.log(res);
+    },
+    (error: any) => {
+      console.log(error);
+    })
+  }
 }
